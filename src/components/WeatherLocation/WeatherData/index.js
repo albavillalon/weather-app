@@ -3,9 +3,11 @@ import WeatherExtraInfo from './WeatherExtraInfo';
 import WeatherTemperature from './WeatherTemperature';
 import {
     CLOUD, CLOUDY, SUN, RAIN, SNOW, WINDY,
-} from './../constants/weather';
+} from './../../../constants/weather';
+import './styles.css';
+
 const WeatherData = () => (
-    <div>
+    <div className="weatherDataContainer">
         <WeatherTemperature 
             temperature={20} 
             weatherState={SUN}
