@@ -1,17 +1,10 @@
 import React, { Component } from 'react';
+import transformWeather from '../../services/transformWeather';
+import { api_weather } from '../../constants/api_url';
 import Location from './Location';
 import WeatherData from './WeatherData';
 import './styles.css';
-import {
-    CLOUD, CLOUDY, SUN, RAIN, SNOW, WINDY,
-} from './../../constants/weather';
-
-const location = "Buenos Aires,ar";
-// const location2 = "Barcelona,ES";
-const api_key = "1bb06bc61b696d5406573e4a0eca1d17";
-const url_base_weather = "http://api.openweathermap.org/data/2.5/weather"
-
-const api_weather = `${url_base_weather}?q=${location}&appid=${api_key}`
+import { SUN } from './../../constants/weather';
 
 const data = {
     temperature: 6,
@@ -28,30 +21,13 @@ class WeatherLocation extends Component {
             data
         }
     }
-    getWeatherState = weather_data => {
-        return SUN;
-    }
-    getData = weather_data => {
-        const { humidity, temp } = weather_data.main;
-        const { speed } = weather_data.wind;
-        const weatherState = this.getWeatherState();
-
-        const data = {
-            humidity,
-            temperature: temp,
-            weatherState,
-            wind: `${speed} m/s`
-        }
-        return data;
-    }
+    
 
     handleUpdateClick = () => {
         fetch(api_weather).then ( resolve => {
             return resolve.json();
         }).then( data => {
-            const newWeather = this.getData(data);
-            console.log(newWeather);
-            debugger;
+            const newWeather = transformWeather(data);
             this.setState({
                 data: newWeather
             });
